@@ -2,6 +2,7 @@ from pathlib import Path
 import sys
 
 import pytest
+from pydantic import ValidationError
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
@@ -31,5 +32,7 @@ def test_shopify_request_allows_documented_fields() -> None:
 
 
 def test_shopify_request_rejects_removed_fields() -> None:
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError) as exc_info:
         ShopifyGoodsAllRequest(shop_id="123")
+
+    assert "shop_id" in str(exc_info.value)

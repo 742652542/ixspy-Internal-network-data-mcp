@@ -5,6 +5,8 @@
 ## 功能
 
 - MCP 工具：`ixspy.search_etsy_goods_all`
+- MCP 工具：`ixspy.get_etsy_categories`
+- MCP 工具：`ixspy.get_shopify_categories`
 - 支持完整筛选参数（关键词、价格区间、销量、收藏、评分、时间、发货地等）
 - 请求参数通过 Pydantic 模型提供字段说明
 - 响应结构透传 `{code, message, data}`

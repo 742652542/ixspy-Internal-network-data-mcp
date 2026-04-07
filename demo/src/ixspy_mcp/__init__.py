@@ -1,0 +1,1 @@
+"""IXSPY FastMCP package."""

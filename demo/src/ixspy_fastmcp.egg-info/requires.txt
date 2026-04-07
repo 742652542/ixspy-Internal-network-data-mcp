@@ -1,0 +1,11 @@
+fastmcp[tasks] @ file:///F:/Development/agent/third_party/fastmcp-3.2.0
+httpx[http2]>=0.27
+pydantic>=2.10
+structlog>=24.1
+python-dotenv>=1.0
+ixspy-img-api>=1.10
+
+[dev]
+pytest>=8.1
+pytest-asyncio>=0.23
+respx>=0.21

@@ -190,7 +190,7 @@ from .etsy_service import EtsyGoodsAllService
 
 
 mcp = FastMCP(
-    "IXSPY FastMCP Server",
+    "IXSPY ETSY Server",
     tasks=True,
 )
 

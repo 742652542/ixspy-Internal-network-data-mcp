@@ -23,7 +23,6 @@ class EtsyGoodsAllRequest(BaseModel):
     )
     store_id: str | None = Field(None, description="店铺 ID")
     materials: str | None = Field(None, description="材质搜索")
-    categoryIds: list[int] | None = Field(None, description="分类 ID 数组")
     category_path: str | None = Field(None, description="分类路径末级 ID")
 
     # 标志位筛选（""/不传不限，1 是，-1 否）

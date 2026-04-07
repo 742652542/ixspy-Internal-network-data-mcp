@@ -4,6 +4,9 @@ from fastmcp import FastMCP
 
 from .category_data import get_etsy_categories as _get_etsy_categories
 from .category_data import get_shopify_categories as _get_shopify_categories
+from .category_data import search_etsy_categories as _search_etsy_categories
+from .category_data import search_shopify_categories as _search_shopify_categories
+from .category_models import CategorySearchRequest
 from .etsy_models import EtsyGoodsAllRequest
 from .etsy_service import EtsyGoodsAllService
 from .shopify_models import ShopifyGoodsAllRequest
@@ -11,7 +14,7 @@ from .shopify_service import ShopifyGoodsAllService
 
 
 mcp = FastMCP(
-    "IXSPY ETSY Server",
+    "IXSPY Etsy/Shopify Server",
     tasks=True,
 )
 
@@ -45,6 +48,36 @@ async def get_etsy_categories() -> dict[str, Any]:
 async def get_shopify_categories() -> dict[str, Any]:
     try:
         return {"code": 0, "message": "", "data": _get_shopify_categories()}
+    except RuntimeError as exc:
+        return {"code": 1, "message": str(exc), "data": None}
+
+
+@mcp.tool(
+    name="ixspy.search_etsy_categories",
+    description="搜索 Etsy 分类（服务端过滤）",
+)
+async def search_etsy_categories(payload: CategorySearchRequest) -> dict[str, Any]:
+    try:
+        return {
+            "code": 0,
+            "message": "",
+            "data": _search_etsy_categories(payload.query, payload.limit),
+        }
+    except RuntimeError as exc:
+        return {"code": 1, "message": str(exc), "data": None}
+
+
+@mcp.tool(
+    name="ixspy.search_shopify_categories",
+    description="搜索 Shopify 分类（服务端过滤）",
+)
+async def search_shopify_categories(payload: CategorySearchRequest) -> dict[str, Any]:
+    try:
+        return {
+            "code": 0,
+            "message": "",
+            "data": _search_shopify_categories(payload.query, payload.limit),
+        }
     except RuntimeError as exc:
         return {"code": 1, "message": str(exc), "data": None}
 

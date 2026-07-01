@@ -9,6 +9,8 @@ from .category_data import search_shopify_categories as _search_shopify_categori
 from .category_models import CategorySearchRequest
 from .etsy_models import EtsyGoodsAllRequest
 from .etsy_service import EtsyGoodsAllService
+from .facebook_models import FacebookAdProductsRequest, FacebookLibraryAdListRequest
+from .facebook_service import FacebookService
 from .request_logging import log_error, log_request
 from .shopify_models import ShopifyGoodsAllRequest
 from .shopify_service import ShopifyGoodsAllService
@@ -21,6 +23,7 @@ mcp = FastMCP(
 
 etsy_service = EtsyGoodsAllService()
 shopify_service = ShopifyGoodsAllService()
+facebook_service = FacebookService()
 
 
 @mcp.tool(
@@ -106,4 +109,36 @@ async def search_shopify_goods_all(payload: ShopifyGoodsAllRequest) -> dict[str,
         return await shopify_service.search(payload)
     except Exception as exc:  # noqa: BLE001 - re-raise after logging
         log_error(tool="ixspy.search_shopify_goods_all", payload=payload, error=exc)
+        raise
+
+
+@mcp.tool(
+    name="ixspy.search_facebook_ad_products",
+    description="根据分类、关键词、域名和时间范围查询 Facebook 广告产品",
+)
+async def search_facebook_ad_products(payload: FacebookAdProductsRequest) -> dict[str, Any]:
+    log_request(tool="ixspy.search_facebook_ad_products", payload=payload)
+    try:
+        return await facebook_service.search_ad_products(payload)
+    except Exception as exc:  # noqa: BLE001 - re-raise after logging
+        log_error(tool="ixspy.search_facebook_ad_products", payload=payload, error=exc)
+        raise
+
+
+@mcp.tool(
+    name="ixspy.search_facebook_library_ad_list",
+    description="查询 Facebook 广告库广告列表",
+)
+async def search_facebook_library_ad_list(
+    payload: FacebookLibraryAdListRequest,
+) -> dict[str, Any]:
+    log_request(tool="ixspy.search_facebook_library_ad_list", payload=payload)
+    try:
+        return await facebook_service.search_library_ad_list(payload)
+    except Exception as exc:  # noqa: BLE001 - re-raise after logging
+        log_error(
+            tool="ixspy.search_facebook_library_ad_list",
+            payload=payload,
+            error=exc,
+        )
         raise

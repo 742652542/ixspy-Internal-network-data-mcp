@@ -13,9 +13,9 @@ class ShopifyGoodsAllRequest(BaseModel):
     # 基础参数
     page: int | None = Field(None, description="页码，默认 1")
     size: int | None = Field(None, description="每页条数，默认 20")
-    orderBy: str | None = Field(None, description="排序字段，见文档 7.1")
-    orderType: str | None = Field(None, description="排序方式：desc / asc")
-    rank_type: str | None = Field(None, description="排名类型")
+    orderBy: str | None = Field('created_time', description="排序字段，见文档 7.1")
+    orderType: str | None = Field('desc', description="排序方式：desc / asc")
+    rank_type: str | None = Field('search', description="排名类型")
     customized: str | None = Field(None, description="私人定制：-1-全部 / 1-定制")
 
     # 文本搜索参数

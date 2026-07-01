@@ -20,7 +20,7 @@ class FacebookService:
     async def search_ad_products(self, payload: FacebookAdProductsRequest) -> dict[str, Any]:
         data = payload.model_dump(exclude_none=True)
         async with httpx.AsyncClient(timeout=self._timeout) as client:
-            response = await client.post(self._ad_products_url, json=data)
+            response = await client.get(self._ad_products_url, params=data)
 
         if response.status_code < 200 or response.status_code >= 300:
             snippet = response.text[:200].replace("\n", " ")
@@ -33,7 +33,7 @@ class FacebookService:
     ) -> dict[str, Any]:
         data = payload.model_dump(exclude_none=True)
         async with httpx.AsyncClient(timeout=self._timeout) as client:
-            response = await client.post(self._library_ad_list_url, json=data)
+            response = await client.get(self._library_ad_list_url, params=data)
 
         if response.status_code < 200 or response.status_code >= 300:
             snippet = response.text[:200].replace("\n", " ")
